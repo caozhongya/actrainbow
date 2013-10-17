@@ -1764,7 +1764,7 @@ status_t LIS3DH_Init(){
 
 status_t LIS3DH_FIFO_Init(){
   //50Hz ODR
-  if(!LIS3DH_SetODR(LIS3DH_ODR_25Hz))
+  if(!LIS3DH_SetODR(LIS3DH_ODR_10Hz))
       return MEMS_ERROR;
   //NORMAL MODE
   if(!LIS3DH_SetMode(LIS3DH_NORMAL))

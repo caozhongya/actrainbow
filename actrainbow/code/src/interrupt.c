@@ -93,8 +93,9 @@ __interrupt void port1_ISR(void)
 //            {
 //             LIS3DH_MultiReadacc(buffer+6*j ,6);
 //            }
-             LIS3DH_MultiReadacc(buffer,25*6);
+             LIS3DH_MultiReadacc(buffer,10*6);
           }
+          LPM3_EXIT;
           break;
          default  :break;
 	}

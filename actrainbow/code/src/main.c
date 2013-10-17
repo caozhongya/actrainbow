@@ -36,6 +36,7 @@ work_mode modeFlag = DAY_MODE;//DAY_MODE;//NIGHT_MODE;
 #define G_BUFFER_QUANTITY  5
 #define ANGL_QUANTITY      7
 */
+/*
   /////15HZ  ?¨ê±?÷?μ?a666 bsp.C
 #define SAMPLE_QUANTITY 15
 #define TIME_WINDOW_MIN 1
@@ -43,6 +44,14 @@ work_mode modeFlag = DAY_MODE;//DAY_MODE;//NIGHT_MODE;
 #define ANGL_APP  1.0f
 #define G_BUFFER_QUANTITY  3
 #define ANGL_QUANTITY      5
+*/
+  /////15HZ  ?¨ê±?÷?μ?a666 bsp.C
+#define SAMPLE_QUANTITY 10
+#define TIME_WINDOW_MIN 1
+#define TIME_WINDOW_MAX 12
+#define ANGL_APP  0.7f
+#define G_BUFFER_QUANTITY  2
+#define ANGL_QUANTITY      3
 //*****************************************************************************
 //
 short RealSample[3];
@@ -81,17 +90,24 @@ unsigned char angl_buffer[30];
 unsigned char temp_buffer[50];  
 unsigned int   STEPS=0;
 
-unsigned char buffer1[6];
+extern unsigned char buffer[25*6];
+
 void StepCountHandler(void)
 {
-  
-	unsigned char jtemp,i;
+          u8_t data_cnt = 0;
+	  u8_t jtemp,i;
        
-	unsigned char data[2],test;
+	  u8_t data[2],test;
+          i16_t value;
+          u8_t *valueL = (u8_t *)(&value);
+          u8_t *valueH = ((u8_t *)(&value)+1);
+          i16_t axis_x;
+          i16_t axis_y;
+          i16_t axis_z;
 
 	
 //        test = readreg();
-          LIS3DH_MultiReadacc(buffer1,6);
+//          LIS3DH_MultiReadacc(buffer1,6);
 //         LIS3DH_GetAccAxesRaw(&buff_raw);
 //          ax=buff_raw.AXIS_X/32767.0f*2;
 //          ay=buff_raw.AXIS_Y/32767*2;
@@ -106,16 +122,28 @@ void StepCountHandler(void)
 //          	g_x = buff_raw.AXIS_X/32767.0f*2;
 //	        g_y = buff_raw.AXIS_Y/32767.0f*2;
 //	        g_z = buff_raw.AXIS_Z/32767.0f*2;
-//	
+//      
+         P6OUT |= 0x01;
+         for(data_cnt=0;data_cnt < 10 ;data_cnt++)
+         {
+                *valueL = buffer[data_cnt*6+0];
+                *valueH = buffer[data_cnt*6+1];
+                axis_x =value;
+                *valueL = buffer[data_cnt*6+2];
+                *valueH = buffer[data_cnt*6+3];
+                axis_y =value;
+                *valueL = buffer[data_cnt*6+4];
+                *valueH = buffer[data_cnt*6+5];
+                axis_z =value;
 	        for(i=0;i<G_BUFFER_QUANTITY-1;i++)
 	         { 
 		    g_x_old[G_BUFFER_QUANTITY-1-i] = g_x_old[G_BUFFER_QUANTITY-i-2];
 		    g_y_old[G_BUFFER_QUANTITY-1-i] = g_y_old[G_BUFFER_QUANTITY-i-2];
 		    g_z_old[G_BUFFER_QUANTITY-1-i] = g_z_old[G_BUFFER_QUANTITY-i-2];
 		 }
-	         g_x_old[0] = buff_raw.AXIS_X/32767.0f*2;
-		 g_y_old[0] = buff_raw.AXIS_Y/32767.0f*2;
-		 g_z_old[0] = buff_raw.AXIS_Z/32767.0f*2;
+	         g_x_old[0] = axis_x/32767.0f*2;
+		 g_y_old[0] = axis_y/32767.0f*2;
+		 g_z_old[0] = axis_z/32767.0f*2;
 		 g_x=0;
 		 g_y=0;
 		 g_z=0;
@@ -211,16 +239,19 @@ void StepCountHandler(void)
 //  	               STM_EVAL_SerialSend(COM1, temp_buffer);
                                 sprintf(temp_buffer,"Steps is %5d\r\n",STEPS);
                                 uart1_sendbuf(temp_buffer);
-                                if(STEPS%2 ==0)
-                                  P6OUT &= ~0x01;
-                                else
-                                  P6OUT |= 0x01;
+//                                if(STEPS%2 ==0)
+//                                  P6OUT &= ~0x01;
+//                                else
+//                                  P6OUT |= 0x01;
 				angl_TimerCnt =  0;
 				angl_fgPossitive = 0;
 				angl_fgNegative= 0; 
                         }
 		}
 	 } 
+     }
+     P6OUT &= ~0x01;
+    __bis_SR_register(LPM3_bits + GIE);
 }
 
 
@@ -283,13 +314,14 @@ int main(void)
   
   
   //P6OUT ^= BIT1;
+        __bis_SR_register(LPM3_bits + GIE);
   while (1)                                 
   {
     if(DAY_MODE==modeFlag){//计步模式
       if(step_time_flag == 1)
       {
         step_time_flag =0;
- //       StepCountHandler();
+        StepCountHandler();
 //        LIS3DH_GetAccAxesRaw(&AxesBuffer); 
       }
 //      LPM3;

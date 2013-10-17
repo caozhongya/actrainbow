@@ -36,7 +36,7 @@ ActionState=1
 Enabled=0
 ShowSource=1
 [DebugChecksum]
-Checksum=-148337755
+Checksum=-1608919971
 [State Storage]
 Control Register=0
 [EEM State Storage]
@@ -53,9 +53,11 @@ ShowArgs=0
 [Disassembly]
 MixedMode=1
 [Breakpoints]
-Bp0=_ "STD_CODE" "{$PROJ_DIR$\code\src\main.c}.110.10" 0 0 0 0 "" 0 ""
-Bp1=_ "STD_CODE" "{$PROJ_DIR$\code\src\interrupt.c}.81.4" 1 0 0 0 "" 0 ""
-Count=2
+Bp0=_ "STD_CODE" "{$PROJ_DIR$\code\src\main.c}.131.7" 0 0 0 0 "" 0 ""
+Bp1=_ "STD_CODE" "{$PROJ_DIR$\code\src\main.c}.237.5" 1 0 0 0 "" 0 ""
+Bp2=_ "STD_CODE" "{$PROJ_DIR$\code\src\main.c}.237.5" 1 0 0 0 "" 0 ""
+Bp3=_ "STD_CODE" "{$PROJ_DIR$\code\src\main.c}.118.10" 1 0 0 0 "" 0 ""
+Count=4
 [FET]
 Clock mode=14
 Extended Clock mode=-1
