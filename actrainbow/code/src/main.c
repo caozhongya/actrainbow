@@ -90,7 +90,7 @@ unsigned char angl_buffer[30];
 unsigned char temp_buffer[50];  
 unsigned int   STEPS=0;
 
-extern unsigned char buffer[25*6];
+extern unsigned char buffer[30*6];
 
 void StepCountHandler(void)
 {
@@ -124,7 +124,7 @@ void StepCountHandler(void)
 //	        g_z = buff_raw.AXIS_Z/32767.0f*2;
 //      
          P6OUT |= 0x01;
-         for(data_cnt=0;data_cnt < 10 ;data_cnt++)
+         for(data_cnt=0;data_cnt < 30 ;data_cnt++)
          {
                 *valueL = buffer[data_cnt*6+0];
                 *valueH = buffer[data_cnt*6+1];

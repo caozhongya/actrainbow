@@ -32,7 +32,7 @@
 #define LIS3DH_ADDRESS      0x18
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
- extern unsigned char buffer[25*6];;
+ extern unsigned char buffer[30*6];;
 /* Private function prototypes -----------------------------------------------*/
 
 /*******************************************************************************
@@ -1780,7 +1780,7 @@ status_t LIS3DH_FIFO_Init(){
                     LIS3DH_I1_INT2_ON_PIN_INT1_DISABLE | LIS3DH_I1_DRDY1_ON_INT1_DISABLE| LIS3DH_I1_DRDY2_ON_INT1_DISABLE |
                     LIS3DH_WTM_ON_INT1_ENABLE | LIS3DH_INT1_OVERRUN_DISABLE   ) ;
   // set watermark is 25 
-  if(!LIS3DH_SetWaterMark(25))
+  if(!LIS3DH_SetWaterMark(30))
      return MEMS_ERROR;
    if(!LIS3DH_SetTriggerInt(LIS3DH_TRIG_INT1))
      return MEMS_ERROR;

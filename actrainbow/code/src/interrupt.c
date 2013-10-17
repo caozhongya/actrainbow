@@ -12,7 +12,7 @@
 
  unsigned char temp = 0; 
  unsigned char j=0;
- unsigned char buffer[25*6]={0};
+ unsigned char buffer[30*6]={0};
 //Timer0 A0 interrupt service routine
 #pragma vector=TIMER0_A0_VECTOR
 __interrupt void TIMER0_A0_ISR(void)
@@ -93,7 +93,7 @@ __interrupt void port1_ISR(void)
 //            {
 //             LIS3DH_MultiReadacc(buffer+6*j ,6);
 //            }
-             LIS3DH_MultiReadacc(buffer,10*6);
+             LIS3DH_MultiReadacc(buffer,30*6);
           }
           LPM3_EXIT;
           break;
