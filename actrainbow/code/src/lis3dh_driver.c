@@ -1767,7 +1767,7 @@ status_t LIS3DH_FIFO_Init(){
   if(!LIS3DH_SetODR(LIS3DH_ODR_25Hz))
       return MEMS_ERROR;
   //NORMAL MODE
-  if(!LIS3DH_SetMode(LIS3DH_LOW_POWER))
+  if(!LIS3DH_SetMode(LIS3DH_NORMAL))
       return MEMS_ERROR;
   //2G SCALE
   if(!LIS3DH_SetFullScale(LIS3DH_FULLSCALE_2))
